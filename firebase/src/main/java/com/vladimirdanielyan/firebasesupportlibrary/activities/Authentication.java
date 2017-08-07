@@ -47,6 +47,11 @@ public abstract class Authentication extends BaseAuthentication {
         }
     }
 
+    public void setUserDb(BaseUser baseUser) {
+        this.baseUser = baseUser;
+        baseUserDatabaseReference.setValue(this.baseUser);
+    }
+
     private void initializeUserDataListener(FirebaseUser user) {
         // [START auth_state_listener]
         userValueEventListener = new ValueEventListener() {
