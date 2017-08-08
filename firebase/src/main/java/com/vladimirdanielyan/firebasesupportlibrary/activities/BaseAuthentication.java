@@ -14,7 +14,7 @@ import com.google.firebase.database.FirebaseDatabase;
  * The BaseAuthentication Class
  */
 
-public abstract class BaseAuthentication extends FullScreenActivity {
+public abstract class BaseAuthentication extends FullscreenActivity {
 
     final private static String TAG = BaseAuthentication.class.getSimpleName();
 

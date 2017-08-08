@@ -12,7 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 
-public abstract class FullScreenActivity extends AppCompatActivity {
+public abstract class FullscreenActivity extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
