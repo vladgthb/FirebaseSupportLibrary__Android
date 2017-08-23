@@ -207,8 +207,8 @@ public abstract class FullscreenActivity extends AppCompatActivity {
                 // No explanation needed, we can request the permission.
 
                 ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_CODE);
+                        new String[]{android.Manifest.permission.RECORD_AUDIO},
+                        AUDIO_REQUEST_CODE);
 
                 // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
                 // app-defined int constant. The callback method gets the
@@ -227,7 +227,73 @@ public abstract class FullscreenActivity extends AppCompatActivity {
 
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.RECORD_AUDIO},
-                    REQUEST_CODE);
+                    AUDIO_REQUEST_CODE);
+        } else {
+            readAccess = true;
+        }
+    }
+
+
+    // Requesting Camera Recording Access
+
+    private final int CAMERA_REQUEST_CODE = 3;
+
+
+    @SuppressWarnings("unused")
+    public Boolean checkCameraPermission() {
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            checkCameraPermissionNewApi();
+        } else {
+            checkCameraPermissionOldApi();
+        }
+        return readAccess;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void checkCameraPermissionNewApi() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CAMERA)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CAMERA},
+                        CAMERA_REQUEST_CODE);
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.CAMERA},
+                        CAMERA_REQUEST_CODE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            readAccess = true;
+        }
+    }
+
+    private void checkCameraPermissionOldApi() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_REQUEST_CODE);
         } else {
             readAccess = true;
         }
@@ -251,6 +317,11 @@ public abstract class FullscreenActivity extends AppCompatActivity {
             }
 
             case AUDIO_REQUEST_CODE: {
+                readAccess = grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED;
+            }
+
+            case CAMERA_REQUEST_CODE: {
                 readAccess = grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED;
             }
