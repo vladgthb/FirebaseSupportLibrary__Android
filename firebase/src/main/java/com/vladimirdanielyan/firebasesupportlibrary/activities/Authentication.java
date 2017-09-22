@@ -131,7 +131,8 @@ public abstract class Authentication extends BaseAuthentication {
     }
 
 
-    private void signUp(final String email, final String password){
+    @SuppressWarnings("unused")
+    public void signUp(final String email, final String password){
         Log.d(TAG, "createAccount:" + email);
 
 
