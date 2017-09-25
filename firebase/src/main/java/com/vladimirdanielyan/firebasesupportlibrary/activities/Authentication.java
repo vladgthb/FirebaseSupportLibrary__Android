@@ -112,6 +112,7 @@ public abstract class Authentication extends BaseAuthentication {
                             }
                             hideProgressDialog();
                             reportFailedAuth(message);
+                            reportFailedSignInStatus(message);
                         } else {
                             hideProgressDialog();
                             Log.d(TAG, "signedIn Successfully:" + email);
@@ -152,6 +153,7 @@ public abstract class Authentication extends BaseAuthentication {
                             @SuppressWarnings("ThrowableResultOfMethodCallIgnored") Exception e = task.getException();
                             if (e != null) {
                                 reportFailedAuth(e.getMessage());
+                                reportFailedSignUpStatus(e.getMessage());
                             }
                         }
                     }
@@ -171,4 +173,7 @@ public abstract class Authentication extends BaseAuthentication {
     public abstract void reportSignInStatus(String userType, String userId);
 
     public abstract void reportSignUpStatus(String email, String password);
+
+    public abstract void reportFailedSignInStatus(String message);
+    public abstract void reportFailedSignUpStatus(String message);
 }
